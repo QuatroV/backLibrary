@@ -58,6 +58,14 @@ class ShelfController {
     });
     return res.json(shelfItem.progress);
   };
+  removeBookFromShelf = async (req, res, next) => {
+    const { bookId, email } = req.query;
+    const shelf = await getUserShelfByEmail(email);
+    const shelfItem = await ShelfItem.destroy({
+      where: { shelfId: shelf.id, bookId },
+    });
+    return res.json({ message: `Книга с ID ${bookId} успешно убрана с полки` });
+  };
 }
 
 module.exports = new ShelfController();
