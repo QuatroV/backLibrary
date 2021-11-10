@@ -3,9 +3,24 @@ const sequelize = require("../db");
 const { Book, ShelfItem } = require("../models/models");
 
 class BookController {
+  getBook = async (req, res, next) => {
+    const { bookId } = req.query;
+    const [bookInfo, metadata] = await sequelize.query(
+      `SELECT title, author, convert_from(public.books.description, 'utf8') as description, convert_from(public.books.annotation, 'utf8') as annotation FROM public.books WHERE id = ${bookId}`
+    );
+    return res.json({ bookInfo });
+  };
+  updateBookInfo = async (req, res, next) => {
+    const { title, author, description, annotation, bookId } = req.body;
+    const updatedBook = await Book.update(
+      { title, author, description, annotation },
+      { where: { id: bookId } }
+    );
+    return res.json({ updatedBook });
+  };
   getAllBooksNamesAuthorsAndDescriptions = async (req, res) => {
     const [books, metadata] = await sequelize.query(
-      "SELECT id, title, author, convert_from(public.books.description, 'utf8') as description FROM public.books"
+      "SELECT id, title, author, convert_from(public.books.description, 'utf8') as description FROM public.books ORDER BY id"
     );
     return res.json({ books });
   };

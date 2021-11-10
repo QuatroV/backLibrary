@@ -10,5 +10,7 @@ router.get(
 );
 router.post("/addNewBook", bookController.addNewBook);
 router.delete("/deleteBook", bookController.deleteBook);
+router.get("/getBook", bookController.getBook);
+router.patch("/updateBookInfo", bookController.updateBookInfo);
 
 module.exports = router;
