@@ -6,7 +6,7 @@ class BookController {
   getBook = async (req, res, next) => {
     const { bookId } = req.query;
     const [bookInfo, metadata] = await sequelize.query(
-      `SELECT title, author, convert_from(public.books.description, 'utf8') as description, convert_from(public.books.annotation, 'utf8') as annotation FROM public.books WHERE id = ${bookId}`
+      `SELECT id, title, author, convert_from(public.books.description, 'utf8') as description, convert_from(public.books.annotation, 'utf8') as annotation FROM public.books WHERE id = ${bookId}`
     );
     return res.json({ bookInfo });
   };

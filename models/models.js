@@ -14,6 +14,7 @@ const Shelf = sequelize.define("shelf", {
 
 const ShelfItem = sequelize.define("shelf_item", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  progress: { type: DataTypes.DOUBLE },
 });
 
 const Book = sequelize.define("book", {
