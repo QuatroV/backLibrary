@@ -12,11 +12,11 @@ class BookController {
   };
   updateBookInfo = async (req, res, next) => {
     const { title, author, description, annotation, bookId } = req.body;
-    const updatedBook = await Book.update(
+    await Book.update(
       { title, author, description, annotation },
       { where: { id: bookId } }
     );
-    return res.json({ updatedBook });
+    return res.json({ success: true });
   };
   getAllBooksNamesAuthorsAndDescriptions = async (req, res) => {
     const [books, metadata] = await sequelize.query(
@@ -44,7 +44,6 @@ class BookController {
       });
       return res.json({ newBook });
     } catch (e) {
-      console.log(e);
       next(ApiError.badRequest("Проблема при прочтении файла с текстом книги"));
     }
   };

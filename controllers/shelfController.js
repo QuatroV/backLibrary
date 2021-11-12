@@ -20,6 +20,9 @@ const getUserBooksByEmail = async (email, next) => {
   const userShelfItemsIds = userShelfItems
     .map((userShelfItem) => userShelfItem.bookId)
     .filter(Boolean);
+  if (!userShelfItemsIds.length) {
+    return [];
+  }
   const [userBooks, metadata] = await sequelize.query(
     `SELECT id, title, author, convert_from(public.books.description, 'utf8') as description FROM public.books WHERE id = ANY(ARRAY[${userShelfItemsIds}]) `
   );
